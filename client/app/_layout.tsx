@@ -6,8 +6,9 @@ export default function RootLayout() {
       screenOptions={{
         headerShown: false,
       }}
+      initialRouteName='(homeScreenTabs)'
     >
-      <Stack.Screen name='index' />
+      <Stack.Screen name='(homeScreenTabs)' options={{ headerShown: false }} />
     </Stack>
   );
 }
