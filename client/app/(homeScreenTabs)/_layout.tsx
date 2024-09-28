@@ -141,16 +141,16 @@ const createStyles = (bottomInset: number, isIOS: boolean) =>
     },
     addButton: {
       marginBottom: bottomInset,
-      minHeight: isIOS ? 60 + bottomInset : 80,
+      minHeight: isIOS && bottomInset ? 60 + bottomInset : 80, // don't look here
     },
     item: {
-      paddingTop: isIOS ? 10 : 0,
+      paddingTop: isIOS && bottomInset ? 10 : 0,
       overflow: 'visible',
     },
     tabBar: {
       backgroundColor: 'white',
       borderTopWidth: 0,
-      minHeight: isIOS ? 0 : 80,
+      minHeight: isIOS && bottomInset ? 0 : 80,
       ...Shadows.medium,
     },
   });
