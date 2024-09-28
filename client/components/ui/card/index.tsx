@@ -1,7 +1,7 @@
-import { Colors } from "@/constants/Colors";
-import { Canvas, Rect, RoundedRect, Shadow } from "@shopify/react-native-skia";
-import { StyleSheet, View } from "react-native";
-import { useDerivedValue, useSharedValue } from "react-native-reanimated";
+import { Colors } from '@/constants/Colors';
+import { Canvas, Rect, RoundedRect, Shadow } from '@shopify/react-native-skia';
+import { StyleSheet, View } from 'react-native';
+import { useDerivedValue, useSharedValue } from 'react-native-reanimated';
 
 type Props = {
   children: React.ReactNode;
@@ -9,7 +9,7 @@ type Props = {
   radius?: number;
 };
 
-export const Card = ({ children, offset = 0, radius = 0 }: Props) => {
+export const Card = ({ children, offset = 48, radius = 0 }: Props) => {
   const size = useSharedValue({
     width: 0,
     height: 0,
@@ -21,8 +21,9 @@ export const Card = ({ children, offset = 0, radius = 0 }: Props) => {
   return (
     <View
       style={{
-        position: "relative",
+        position: 'relative',
         paddingVertical: offset,
+        marginVertical: -offset,
       }}
     >
       <View
@@ -41,7 +42,7 @@ export const Card = ({ children, offset = 0, radius = 0 }: Props) => {
       </View>
       <Canvas
         style={{
-          position: "absolute",
+          position: 'absolute',
           top: 0,
           left: 0,
           right: 0,
@@ -63,7 +64,7 @@ export const Card = ({ children, offset = 0, radius = 0 }: Props) => {
           <Shadow
             dx={0}
             dy={4}
-            blur={16}
+            blur={8}
             color={Colors.light.neutral[1000]}
             shadowOnly
           />
