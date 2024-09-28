@@ -1,4 +1,4 @@
-import { Shadows } from '@/constants/Colors';
+import { Shadows } from '@/constants/Styles';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
 import { StyleSheet } from 'react-native';
