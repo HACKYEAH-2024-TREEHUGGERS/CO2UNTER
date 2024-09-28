@@ -1,46 +1,27 @@
+import { Summary } from "@/components/cards/summary";
 import { Card } from "@/components/ui/card";
+import { Tabs } from "@/components/ui/tabs";
 import { Colors } from "@/constants/Colors";
+import { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 export default function Tab() {
   return (
     <View style={styles.container}>
-      <View>
-        <Text
-          style={{
-            color: Colors.light.neutral[500],
-          }}
-        >
-          Cześć,
-        </Text>
-        <Text
-          style={{
-            color: Colors.light.neutral[900],
-            fontWeight: 500,
-            fontSize: 24,
-          }}
-        >
-          {"{name}"}
-        </Text>
+      <View
+        style={{
+          alignItems: "center",
+          marginBottom: 16,
+        }}
+      >
+        <Text>Dashboard</Text>
       </View>
       <View
         style={{
-          marginTop: -24,
+          marginTop: -48,
         }}
       >
-        <Card offset={48} radius={24}>
-          <View style={{ padding: 16 }}>
-            <Text
-              style={{
-                color: Colors.light.neutral[900],
-                fontWeight: 500,
-                fontSize: 20,
-              }}
-            >
-              Twoje Emisje CO₂
-            </Text>
-          </View>
-        </Card>
+        <Summary />
       </View>
     </View>
   );
