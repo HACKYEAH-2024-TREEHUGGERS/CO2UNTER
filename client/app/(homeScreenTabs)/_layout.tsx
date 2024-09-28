@@ -1,55 +1,55 @@
-import { TabAddButton } from '@/components/TabAddButton';
-import { Shadows } from '@/constants/Styles';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Tabs } from 'expo-router';
-import { StyleSheet } from 'react-native';
-import { BOTTOM_TAB_BAR_HEIGHT } from '@/constants/Layout';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { TabAddButton } from "@/components/TabAddButton";
+import { Shadows } from "@/constants/Styles";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { Tabs } from "expo-router";
+import { StyleSheet } from "react-native";
+import { BOTTOM_TAB_BAR_HEIGHT } from "@/constants/Layout";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreenTabsLayout() {
   return (
     <SafeAreaView style={styles.container}>
-      <TabAddButton onPress={() => console.log('Add button pressed')} />
+      <TabAddButton onPress={() => console.log("Add button pressed")} />
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: 'blue',
+          tabBarActiveTintColor: "blue",
           headerShown: false,
           tabBarStyle: styles.tabBar,
         }}
       >
         <Tabs.Screen
-          name='index'
+          name="index"
           options={{
-            title: '',
+            title: "",
             tabBarIcon: ({ color }) => (
-              <FontAwesome size={28} name='home' color={color} />
+              <FontAwesome size={28} name="home" color={color} />
             ),
           }}
         />
         <Tabs.Screen
-          name='calculator'
+          name="calculator"
           options={{
-            title: '',
+            title: "",
             tabBarIcon: ({ color }) => (
-              <FontAwesome size={28} name='cog' color={color} />
+              <FontAwesome size={28} name="cog" color={color} />
             ),
           }}
         />
         <Tabs.Screen
-          name='timeline'
+          name="timeline"
           options={{
-            title: '',
+            title: "",
             tabBarIcon: ({ color }) => (
-              <FontAwesome size={28} name='cog' color={color} />
+              <FontAwesome size={28} name="cog" color={color} />
             ),
           }}
         />
         <Tabs.Screen
-          name='profile'
+          name="profile"
           options={{
-            title: '',
+            title: "",
             tabBarIcon: ({ color }) => (
-              <FontAwesome size={28} name='cog' color={color} />
+              <FontAwesome size={28} name="cog" color={color} />
             ),
           }}
         />
@@ -61,9 +61,10 @@ export default function HomeScreenTabsLayout() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white",
   },
   tabBar: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderTopWidth: 0,
     height: BOTTOM_TAB_BAR_HEIGHT,
     ...Shadows.medium,
