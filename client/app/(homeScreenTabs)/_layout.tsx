@@ -1,6 +1,6 @@
 import { TabBarAddButton, TabBarIcon } from '@/components/ui/tab-bar';
 import { Shadows } from '@/constants/Styles';
-import { Tabs } from 'expo-router';
+import { router, Tabs } from 'expo-router';
 import { Platform, StyleSheet } from 'react-native';
 import {
   SafeAreaView,
@@ -18,7 +18,7 @@ export default function HomeScreenTabsLayout() {
   return (
     <SafeAreaView style={styles.container}>
       <TabBarAddButton
-        onPress={() => console.log('Add button pressed')}
+        onPress={() => router.navigate('../addActivity')}
         style={styles.addButton}
       />
       <Tabs

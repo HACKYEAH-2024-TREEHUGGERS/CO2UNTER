@@ -9,6 +9,10 @@ export default function RootLayout() {
       initialRouteName='(homeScreenTabs)'
     >
       <Stack.Screen name='(homeScreenTabs)' options={{ headerShown: false }} />
+      <Stack.Screen
+        name='addActivity'
+        options={{ headerShown: false, animation: 'slide_from_bottom' }}
+      />
     </Stack>
   );
 }
