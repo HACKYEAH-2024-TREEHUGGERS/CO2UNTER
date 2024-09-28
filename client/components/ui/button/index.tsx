@@ -1,7 +1,13 @@
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
-import { labelStyles, styles, Variant } from "./styles";
+import {
+  getButtonConfig,
+  labelStyles,
+  styles,
+  Variant,
+  VariantState,
+} from "./styles";
 import { Loader } from "../loader";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -12,24 +18,57 @@ type Props = {
   children: string;
   loading?: boolean;
   variant?: Variant;
+  state?: VariantState;
+  icon?: {
+    icon: (color: string) => React.ReactNode;
+    position?: "left" | "right";
+  };
 };
 
 const Button = React.forwardRef<AnimatedPressableRef, Props>(
-  ({ children, loading, variant = "primary", ...props }, ref) => {
-    const variantStyle = styles[variant];
-    const labelStyle = labelStyles[variant as keyof typeof labelStyles];
+  (
+    {
+      children,
+      loading,
+      variant = "primary",
+      state = "default",
+      icon,
+      ...props
+    },
+    ref
+  ) => {
+    const config = getButtonConfig(variant, loading ? "inactive" : state);
 
     return (
       <AnimatedPressable
         layout={LinearTransition.springify()}
         ref={ref}
         {...props}
-        style={[styles.buttonBase, variantStyle]}
+        style={[
+          styles.buttonBase,
+          {
+            backgroundColor: config.background,
+            borderColor: config.border,
+          },
+        ]}
       >
         {!loading ? (
-          <Text style={[labelStyles.buttonBase, labelStyle]}>{children}</Text>
+          <>
+            {icon?.position === "left" && icon.icon(config.label)}
+            <Text
+              style={[
+                labelStyles.buttonBase,
+                {
+                  color: config.label,
+                },
+              ]}
+            >
+              {children}
+            </Text>
+            {icon?.position === "right" && icon.icon(config.label)}
+          </>
         ) : (
-          <Loader color="black" />
+          <Loader color={config.label} />
         )}
       </AnimatedPressable>
     );
