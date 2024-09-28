@@ -1,45 +1,45 @@
-import { Text, View } from 'react-native';
-import { Card } from '../ui/card';
-import { Tabs } from '../ui/tabs';
-import { Colors } from '@/constants/Colors';
-import { useState } from 'react';
+import { Text, View } from "react-native";
+import { Card } from "../ui/card";
+import { Tabs } from "../ui/tabs";
+import { Colors } from "@/constants/Colors";
+import { useState } from "react";
 import {
   Pie,
   type PieSliceData,
   PolarChart,
   useSlicePath,
-} from 'victory-native';
+} from "victory-native";
 import {
   Canvas,
   Circle,
   Path,
   RadialGradient,
   vec,
-} from '@shopify/react-native-skia';
+} from "@shopify/react-native-skia";
 
 const options = [
   {
-    value: 'year',
-    label: 'Rok',
+    value: "year",
+    label: "Rok",
   },
   {
-    value: 'month',
-    label: 'Miesiąc',
+    value: "month",
+    label: "Miesiąc",
   },
   {
-    value: 'week',
-    label: 'Tydzień',
+    value: "week",
+    label: "Tydzień",
   },
   {
-    value: 'day',
-    label: 'Dzień',
+    value: "day",
+    label: "Dzień",
   },
 ];
 
-type Option = (typeof options)[number]['value'];
+type Option = (typeof options)[number]["value"];
 
 export const Summary = () => {
-  const [selected, setSelected] = useState<Option>('week');
+  const [selected, setSelected] = useState<Option>("week");
 
   return (
     <Card offset={48} radius={24}>
@@ -47,9 +47,9 @@ export const Summary = () => {
         <View
           style={{
             marginBottom: 16,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
           <Text
@@ -63,7 +63,7 @@ export const Summary = () => {
           </Text>
           <Text
             style={{
-              color: '#2E6BE5',
+              color: "#2E6BE5",
             }}
           >
             Więcej...
@@ -75,21 +75,19 @@ export const Summary = () => {
           style={{
             height: 256,
             marginTop: 24,
-            alignItems: 'center',
-            justifyContent: 'center',
           }}
         >
           <Canvas
             style={{
-              position: 'absolute',
+              position: "absolute",
               width: 256,
               height: 256,
               zIndex: -1,
               borderRadius: 256 / 2,
-              alignSelf: 'center',
+              alignSelf: "center",
             }}
           >
-            <Circle cx={256 / 2} cy={256 / 2} r={256 / 2} color='red'>
+            <Circle cx={256 / 2} cy={256 / 2} r={256 / 2} color="red">
               <RadialGradient
                 c={vec(256 / 2, 256 / 2)}
                 r={256 / 2}
@@ -101,11 +99,18 @@ export const Summary = () => {
               />
             </Circle>
           </Canvas>
-          <View style={{ position: 'absolute', alignSelf: 'center' }}>
+          <View
+            style={{
+              position: "absolute",
+              alignSelf: "center",
+              height: "100%",
+              justifyContent: "center",
+            }}
+          >
             <Text
               style={{
                 fontSize: 36,
-                fontWeight: '600',
+                fontWeight: "600",
                 color: Colors.light.neutral[900],
               }}
             >
@@ -114,9 +119,9 @@ export const Summary = () => {
           </View>
           <PolarChart
             data={DATA} // 👈 specify your data
-            labelKey={'label'} // 👈 specify data key for labels
-            valueKey={'value'} // 👈 specify data key for values
-            colorKey={'color'} // 👈 specify data key for color
+            labelKey={"label"} // 👈 specify data key for labels
+            valueKey={"value"} // 👈 specify data key for values
+            colorKey={"color"} // 👈 specify data key for color
           >
             <Pie.Chart
               startAngle={135}
@@ -129,7 +134,7 @@ export const Summary = () => {
         </View>
         <Text
           style={{
-            fontWeight: '500',
+            fontWeight: "500",
           }}
         >
           Porównanie Twoich emisji
@@ -140,13 +145,13 @@ export const Summary = () => {
 };
 
 const DATA = [
-  { value: 0.6, color: Colors.light.green[500], label: 'Label 1' },
-  { value: 0.4, color: Colors.light.neutral[50], label: 'Label 2' },
+  { value: 0.6, color: Colors.light.green[500], label: "Label 1" },
+  { value: 0.4, color: Colors.light.neutral[50], label: "Label 2" },
 ];
 
 function MyCustomSlice({ slice }: { slice: PieSliceData }) {
   // 👇 use the hook to generate a path object.
   const path = useSlicePath({ slice });
   /* 👇 experiment wtih any other customizations you want */
-  return <Path path={path} color={slice.color} style='fill' />;
+  return <Path path={path} color={slice.color} style="fill" />;
 }
