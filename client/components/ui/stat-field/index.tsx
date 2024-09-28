@@ -1,6 +1,6 @@
 import { Colors } from '@/constants/Colors';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Text } from 'react-native';
+import { StyleProp, Text, ViewStyle } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 
 type Props = {
@@ -10,9 +10,10 @@ type Props = {
     | 'directions-car'
     | 'directions-bus'
     | 'directions-bike';
-  value: string;
+  value: string | number;
   label: string;
   valueTextSize?: 'big' | 'small';
+  style?: StyleProp<ViewStyle>;
 };
 
 export const StatField = ({
@@ -20,11 +21,12 @@ export const StatField = ({
   value,
   label,
   valueTextSize = 'big',
+  style,
 }: Props) => {
   const isBigValue = valueTextSize === 'big';
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <View style={styles.valueContainer}>
         <MaterialIcons
           name={icon}

@@ -16,6 +16,7 @@ import {
   RadialGradient,
   vec,
 } from '@shopify/react-native-skia';
+import { StatField } from '../ui/stat-field';
 
 const options = [
   {
@@ -139,6 +140,14 @@ export const Summary = () => {
         >
           Porównanie Twoich emisji
         </Text>
+        {DATA_TREES.map(({ value, label, icon }) => (
+          <StatField
+            icon={icon}
+            value={value}
+            label={label}
+            style={{ marginTop: 12 }}
+          />
+        ))}
       </View>
     </Card>
   );
@@ -148,6 +157,13 @@ const DATA = [
   { value: 0.6, color: Colors.light.green[500], label: 'Label 1' },
   { value: 0.4, color: Colors.light.neutral[50], label: 'Label 2' },
 ];
+
+const DATA_TREES = [
+  { value: 17, label: '100-letnich drzew', icon: 'nature' },
+  { value: 35, label: '25-letnich drzew', icon: 'nature' },
+  { value: 57, label: 'młodych drzew', icon: 'nature' },
+  { value: `${5}%`, label: 'drzew w Parku Jordana', icon: 'nature-people' },
+] as const;
 
 function MyCustomSlice({ slice }: { slice: PieSliceData }) {
   // 👇 use the hook to generate a path object.
