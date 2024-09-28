@@ -141,7 +141,7 @@ const createStyles = (bottomInset: number, isIOS: boolean) =>
     },
     addButton: {
       marginBottom: bottomInset,
-      minHeight: isIOS ? 60 + bottomInset : 60,
+      minHeight: isIOS ? 60 + bottomInset : 80,
     },
     item: {
       paddingTop: isIOS ? 10 : 0,
@@ -150,7 +150,7 @@ const createStyles = (bottomInset: number, isIOS: boolean) =>
     tabBar: {
       backgroundColor: 'white',
       borderTopWidth: 0,
-      minHeight: isIOS ? 0 : 60,
+      minHeight: isIOS ? 0 : 80,
       ...Shadows.medium,
     },
   });
