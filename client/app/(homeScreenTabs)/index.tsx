@@ -2,19 +2,15 @@ import { Diet } from '@/components/cards/diet';
 import { Media } from '@/components/cards/media';
 import { Summary } from '@/components/cards/summary';
 import { Transport } from '@/components/cards/transport';
-import { Card } from '@/components/ui/card';
-import { Tabs } from '@/components/ui/tabs';
-import { Colors } from '@/constants/Colors';
-import { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
 export default function Tab() {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View
         style={{
           alignItems: 'center',
-          marginBottom: 16,
+          marginVertical: 16,
         }}
       >
         <Text>Dashboard</Text>
@@ -22,6 +18,8 @@ export default function Tab() {
       <View
         style={{
           gap: 24,
+          paddingHorizontal: 16,
+          paddingBottom: 24,
         }}
       >
         <Summary />
@@ -29,13 +27,12 @@ export default function Tab() {
         <Diet />
         <Media />
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 16,
     backgroundColor: 'white',
     flex: 1,
   },
