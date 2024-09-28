@@ -1,28 +1,62 @@
-import { TabAddButton } from '@/components/TabAddButton';
+import { TabBarAddButton, TabBarIcon } from '@/components/ui/tab-bar';
 import { Shadows } from '@/constants/Styles';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
-import { StyleSheet } from 'react-native';
-import { BOTTOM_TAB_BAR_HEIGHT } from '@/constants/Layout';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Platform, StyleSheet } from 'react-native';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
+import { Colors } from '@/constants/Colors';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native';
 
 export default function HomeScreenTabsLayout() {
+  const { bottom: bottomInset } = useSafeAreaInsets();
+
+  const styles = createStyles(bottomInset, Platform.OS === 'ios');
+
   return (
     <SafeAreaView style={styles.container}>
-      <TabAddButton onPress={() => console.log('Add button pressed')} />
+      <TabBarAddButton
+        onPress={() => console.log('Add button pressed')}
+        style={styles.addButton}
+      />
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: 'blue',
+          tabBarActiveTintColor: Colors.light.green[500],
+          tabBarInactiveTintColor: Colors.light.neutral[975],
           headerShown: false,
           tabBarStyle: styles.tabBar,
+          tabBarItemStyle: styles.item,
+          tabBarShowLabel: false,
+          tabBarButton: (props) => (
+            <TouchableOpacity {...props}>{props.children}</TouchableOpacity>
+          ),
         }}
       >
         <Tabs.Screen
           name='index'
           options={{
             title: '',
-            tabBarIcon: ({ color }) => (
-              <FontAwesome size={28} name='home' color={color} />
+            tabBarIcon: (props) => (
+              <TabBarIcon
+                {...props}
+                icon={
+                  props.focused ? (
+                    <MaterialCommunityIcons
+                      size={32}
+                      name='view-grid'
+                      color={props.color}
+                    />
+                  ) : (
+                    <MaterialCommunityIcons
+                      size={32}
+                      name='view-grid-outline'
+                      color={props.color}
+                    />
+                  )
+                }
+              />
             ),
           }}
         />
@@ -30,26 +64,67 @@ export default function HomeScreenTabsLayout() {
           name='calculator'
           options={{
             title: '',
-            tabBarIcon: ({ color }) => (
-              <FontAwesome size={28} name='cog' color={color} />
+            tabBarIcon: (props) => (
+              <TabBarIcon
+                {...props}
+                icon={
+                  props.focused ? (
+                    <MaterialCommunityIcons
+                      size={32}
+                      name='calculator-variant'
+                      color={props.color}
+                    />
+                  ) : (
+                    <MaterialCommunityIcons
+                      size={32}
+                      name='calculator-variant-outline'
+                      color={props.color}
+                    />
+                  )
+                }
+              />
             ),
+            tabBarItemStyle: [styles.item, { marginRight: '10%' }],
           }}
         />
         <Tabs.Screen
           name='timeline'
           options={{
             title: '',
-            tabBarIcon: ({ color }) => (
-              <FontAwesome size={28} name='cog' color={color} />
+            tabBarIcon: (props) => (
+              <TabBarIcon
+                {...props}
+                icon={
+                  <MaterialIcons size={32} name='history' color={props.color} />
+                }
+              />
             ),
+            tabBarItemStyle: [styles.item, { marginLeft: '10%' }],
           }}
         />
         <Tabs.Screen
           name='profile'
           options={{
             title: '',
-            tabBarIcon: ({ color }) => (
-              <FontAwesome size={28} name='cog' color={color} />
+            tabBarIcon: (props) => (
+              <TabBarIcon
+                {...props}
+                icon={
+                  props.focused ? (
+                    <MaterialIcons
+                      size={32}
+                      name='account-circle'
+                      color={props.color}
+                    />
+                  ) : (
+                    <MaterialCommunityIcons
+                      size={32}
+                      name='account-circle-outline'
+                      color={props.color}
+                    />
+                  )
+                }
+              />
             ),
           }}
         />
@@ -58,14 +133,24 @@ export default function HomeScreenTabsLayout() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  tabBar: {
-    backgroundColor: 'white',
-    borderTopWidth: 0,
-    height: BOTTOM_TAB_BAR_HEIGHT,
-    ...Shadows.medium,
-  },
-});
+const createStyles = (bottomInset: number, isIOS: boolean) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: 'white',
+    },
+    addButton: {
+      marginBottom: bottomInset,
+      minHeight: isIOS ? 60 + bottomInset : 60,
+    },
+    item: {
+      paddingTop: isIOS ? 10 : 0,
+      overflow: 'visible',
+    },
+    tabBar: {
+      backgroundColor: 'white',
+      borderTopWidth: 0,
+      minHeight: isIOS ? 0 : 60,
+      ...Shadows.medium,
+    },
+  });
