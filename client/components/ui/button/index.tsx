@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, Text } from 'react-native';
-import Animated, { LinearTransition } from 'react-native-reanimated';
+import Animated, { Easing, LinearTransition } from 'react-native-reanimated';
 import {
   getButtonConfig,
   labelStyles,
@@ -44,7 +44,9 @@ const Button = React.forwardRef<AnimatedPressableRef, Props>(
     return (
       <AnimatedPressable
         onPress={onPress}
-        layout={LinearTransition.springify()}
+        layout={LinearTransition.duration(100).easing(
+          Easing.inOut(Easing.ease)
+        )}
         ref={ref}
         {...props}
         style={[
