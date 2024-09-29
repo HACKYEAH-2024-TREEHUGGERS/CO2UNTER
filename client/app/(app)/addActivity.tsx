@@ -1,10 +1,11 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Colors } from '@/constants/Colors';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function AddActivityScreen() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <StatusBar style="dark" />
       <View
         style={{
@@ -29,7 +30,7 @@ export default function AddActivityScreen() {
           paddingBottom: 24,
         }}
       ></View>
-    </View>
+    </SafeAreaView>
   );
 }
 

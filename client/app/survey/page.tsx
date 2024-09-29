@@ -95,7 +95,7 @@ export default function SurveyPage() {
     <View
       style={{
         flex: 1,
-        paddingTop: top,
+        paddingTop: top || 24,
         paddingBottom: bottom || 24,
         backgroundColor: 'white',
         paddingHorizontal: 16,
