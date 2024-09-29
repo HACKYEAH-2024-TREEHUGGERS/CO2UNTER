@@ -9,6 +9,7 @@ import {
 import { Colors } from '@/constants/Colors';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 
 export default function HomeScreenTabsLayout() {
   const { bottom: bottomInset } = useSafeAreaInsets();
@@ -17,6 +18,7 @@ export default function HomeScreenTabsLayout() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar style="dark" />
       <TabBarAddButton
         onPress={() => router.navigate('../addActivity')}
         style={styles.addButton}
@@ -35,7 +37,7 @@ export default function HomeScreenTabsLayout() {
         }}
       >
         <Tabs.Screen
-          name='index'
+          name="index"
           options={{
             title: '',
             tabBarIcon: (props) => (
@@ -45,13 +47,13 @@ export default function HomeScreenTabsLayout() {
                   props.focused ? (
                     <MaterialCommunityIcons
                       size={32}
-                      name='view-grid'
+                      name="view-grid"
                       color={props.color}
                     />
                   ) : (
                     <MaterialCommunityIcons
                       size={32}
-                      name='view-grid-outline'
+                      name="view-grid-outline"
                       color={props.color}
                     />
                   )
@@ -61,7 +63,7 @@ export default function HomeScreenTabsLayout() {
           }}
         />
         <Tabs.Screen
-          name='calculator'
+          name="calculator"
           options={{
             title: '',
             tabBarIcon: (props) => (
@@ -71,13 +73,13 @@ export default function HomeScreenTabsLayout() {
                   props.focused ? (
                     <MaterialCommunityIcons
                       size={32}
-                      name='calculator-variant'
+                      name="calculator-variant"
                       color={props.color}
                     />
                   ) : (
                     <MaterialCommunityIcons
                       size={32}
-                      name='calculator-variant-outline'
+                      name="calculator-variant-outline"
                       color={props.color}
                     />
                   )
@@ -88,14 +90,14 @@ export default function HomeScreenTabsLayout() {
           }}
         />
         <Tabs.Screen
-          name='timeline'
+          name="timeline"
           options={{
             title: '',
             tabBarIcon: (props) => (
               <TabBarIcon
                 {...props}
                 icon={
-                  <MaterialIcons size={32} name='history' color={props.color} />
+                  <MaterialIcons size={32} name="history" color={props.color} />
                 }
               />
             ),
@@ -103,7 +105,7 @@ export default function HomeScreenTabsLayout() {
           }}
         />
         <Tabs.Screen
-          name='profile'
+          name="profile"
           options={{
             title: '',
             tabBarIcon: (props) => (
@@ -113,13 +115,13 @@ export default function HomeScreenTabsLayout() {
                   props.focused ? (
                     <MaterialIcons
                       size={32}
-                      name='account-circle'
+                      name="account-circle"
                       color={props.color}
                     />
                   ) : (
                     <MaterialCommunityIcons
                       size={32}
-                      name='account-circle-outline'
+                      name="account-circle-outline"
                       color={props.color}
                     />
                   )
