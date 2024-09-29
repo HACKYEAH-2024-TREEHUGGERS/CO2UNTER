@@ -5,6 +5,8 @@ import uvicorn
 
 from fastapi import FastAPI, Depends
 from pymongo import MongoClient
+
+import services.dashboard_service
 from services import users_service, activities_service
 from schemas.users import CreateUser
 from schemas.activities import CreateActivity
@@ -31,7 +33,7 @@ def get_user(device_id: str, db=Depends(get_db)):
 
 @app.get("/users/{device_id}/dashboard", tags=["users"])
 def get_dashboard(device_id: str, db=Depends(get_db), timeframe: str = "week"):
-    return users_service.get_dashboard(db, device_id, timeframe)
+    return services.dashboard_service.get_dashboard(db, device_id, timeframe)
 
 
 @app.post("/users/", tags=["users"], status_code=201)
