@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ky } from './ky';
 import { HTTPError } from 'ky';
 
-const generateOrGetSecureId = async () => {
+export const generateOrGetSecureId = async () => {
   const deviceId = await SecureStore.getItemAsync('deviceId');
   if (deviceId) return JSON.parse(deviceId);
   const newDeviceId = uuidv4();
