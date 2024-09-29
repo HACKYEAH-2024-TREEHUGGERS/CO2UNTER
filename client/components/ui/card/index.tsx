@@ -1,15 +1,21 @@
 import { Colors } from '@/constants/Colors';
 import { Canvas, Rect, RoundedRect, Shadow } from '@shopify/react-native-skia';
-import { StyleSheet, View } from 'react-native';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { useDerivedValue, useSharedValue } from 'react-native-reanimated';
 
 type Props = {
   children: React.ReactNode;
   offset?: number;
   radius?: number;
+  containerStyle?: StyleProp<ViewStyle>;
 };
 
-export const Card = ({ children, offset = 48, radius = 0 }: Props) => {
+export const Card = ({
+  children,
+  containerStyle,
+  offset = 48,
+  radius = 0,
+}: Props) => {
   const size = useSharedValue({
     width: 0,
     height: 0,
@@ -20,11 +26,14 @@ export const Card = ({ children, offset = 48, radius = 0 }: Props) => {
 
   return (
     <View
-      style={{
-        position: 'relative',
-        paddingVertical: offset,
-        marginVertical: -offset,
-      }}
+      style={[
+        {
+          position: 'relative',
+          paddingVertical: offset,
+          marginVertical: -offset,
+        },
+        containerStyle,
+      ]}
     >
       <View
         style={{
