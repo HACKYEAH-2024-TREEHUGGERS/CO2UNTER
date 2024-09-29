@@ -5,7 +5,7 @@ from pymongo.database import Database
 
 from schemas.users import CreateUser
 from services.activities_service import aggregate_emissions_summary
-from services.emission_service import EMISSIONS_PER_HUMAN_PER_DAY
+from constants import EMISSIONS_PER_HUMAN_PER_DAY, EMISSIONS_PER_TREE_PER_KG
 
 
 def get_user_by_device_id(db: Database, device_id: str):
@@ -21,16 +21,16 @@ def get_dashboard(db: Database, device_id: str, timeframe: str):
     now = datetime.datetime.utcnow()
     if timeframe == "day":
         start_time = now - datetime.timedelta(days=1)
-        multiplier = 1
+        day_multiplier = 1
     elif timeframe == "week":
         start_time = now - datetime.timedelta(weeks=1)
-        multiplier = 7
+        day_multiplier = 7
     elif timeframe == "month":
         start_time = now - datetime.timedelta(days=30)
-        multiplier = 30
+        day_multiplier = 30
     else:
         start_time = now - datetime.timedelta(days=365)
-        multiplier = 365
+        day_multiplier = 365
 
     user = list(db.users.aggregate([
         {"$match": {"device_id": device_id}},
@@ -49,11 +49,16 @@ def get_dashboard(db: Database, device_id: str, timeframe: str):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
+    total_emissions = aggregate_emissions_summary(user[0].get("activities"))
     return {
-        "summary": aggregate_emissions_summary(user[0].get("activities")),
+        "summary": total_emissions,
         "comparison": {
-            "poland": EMISSIONS_PER_HUMAN_PER_DAY["poland"] * multiplier,
-            "eu": EMISSIONS_PER_HUMAN_PER_DAY["eu"] * multiplier
+            country: emissions * day_multiplier
+            for country, emissions in EMISSIONS_PER_HUMAN_PER_DAY.items()
+        },
+        "trees": {
+            tree: tree_multiplier * total_emissions
+            for tree, tree_multiplier in EMISSIONS_PER_TREE_PER_KG.items()
         }
     }
 
