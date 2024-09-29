@@ -101,28 +101,30 @@ export const Transport = () => {
             Edytuj
           </Text>
         </View>
-        <Section title='Samochody'>
-          {DATA_TRANSPORT.cars.map(({ value, label, icon, attributes }) => (
-            <StatField
-              icon={icon}
-              value={value}
-              valueTextSize='small'
-              label={label}
-              key={label}
-              attributes={attributes as [Attribute, Attribute, Attribute]}
-            />
-          ))}
-        </Section>
-
-        <Section title='Inne'>
-          {DATA_TRANSPORT.other.map(
-            ({ value, label, icon, attributes, green }) => (
+        <Section title="Samochody">
+          {DATA_TRANSPORT.cars.map(
+            ({ value, label, icon, attributes }, index) => (
               <StatField
                 icon={icon}
                 value={value}
-                valueTextSize='small'
+                valueTextSize="small"
                 label={label}
-                key={label}
+                key={`${label}${index}`}
+                attributes={attributes as [Attribute, Attribute, Attribute]}
+              />
+            )
+          )}
+        </Section>
+
+        <Section title="Inne">
+          {DATA_TRANSPORT.other.map(
+            ({ value, label, icon, attributes, green }, index) => (
+              <StatField
+                icon={icon}
+                value={value}
+                valueTextSize="small"
+                label={label}
+                key={`${label}${index}`}
                 attributes={attributes as [Attribute, Attribute, Attribute]}
                 green={green}
               />
