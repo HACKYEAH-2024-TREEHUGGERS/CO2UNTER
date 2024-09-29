@@ -8,7 +8,6 @@ export const Diet = () => {
       <View style={{ padding: 16 }}>
         <View
           style={{
-            marginBottom: 16,
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
