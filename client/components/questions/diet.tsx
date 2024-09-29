@@ -49,6 +49,7 @@ export const Diet = () => {
           keyboardType="numeric"
           value={value?.calories}
           onChangeText={(calories) => setValue(ID, { ...value, calories })}
+          suffix="kcal"
         />
       </View>
       <View

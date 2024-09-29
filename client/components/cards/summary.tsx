@@ -20,8 +20,10 @@ import { useStateColors } from '@/hooks/useStateColors';
 import { StatCard } from '../ui/stat-card';
 import { StatField } from '../ui/stat-field';
 import { Section } from '../ui/section';
+import { Dashboard } from '@/api/schema';
+import { Timeframe, useDashboardStore } from '@/stores/dashboard';
 
-const options = [
+const options: { value: Timeframe; label: string }[] = [
   {
     value: 'year',
     label: 'Rok',
@@ -42,9 +44,33 @@ const options = [
 
 type Option = (typeof options)[number]['value'];
 
-export const Summary = () => {
-  const [selected, setSelected] = useState<Option>('week');
-  const colors = useStateColors('positive');
+type Props = {
+  dashboard: Dashboard;
+};
+
+export const Summary = ({ dashboard }: Props) => {
+  const setTimeframe = useDashboardStore((state) => state.setTimeframe);
+  const timeframe = useDashboardStore((state) => state.timeframe);
+
+  const { eu, poland } = dashboard.country_emission_per_timeline;
+
+  const percentagePoland = (dashboard.summary - poland) / poland;
+  const percentageEU = (dashboard.summary - eu) / eu;
+
+  const colors = useStateColors(percentagePoland < 1 ? 'positive' : 'negative');
+
+  const label = (() => {
+    switch (timeframe) {
+      case 'year':
+        return 'w tym roku';
+      case 'month':
+        return 'w tym miesiącu';
+      case 'week':
+        return 'w tym tygodniu';
+      case 'day':
+        return 'dzisiaj';
+    }
+  })();
 
   return (
     <Card radius={24}>
@@ -74,7 +100,7 @@ export const Summary = () => {
             Więcej...
           </Text>
         </View>
-        <Tabs options={options} selected={selected} onChange={setSelected} />
+        <Tabs options={options} selected={timeframe} onChange={setTimeframe} />
 
         <View
           style={{
@@ -117,15 +143,16 @@ export const Summary = () => {
                 color: Colors.light.neutral[900],
               }}
             >
-              171,2<Text style={{ fontSize: 24 }}>kg</Text>
+              {dashboard.summary}
+              <Text style={{ fontSize: 24 }}>kg</Text>
             </Text>
-            <Text>w tym miesiącu</Text>
+            <Text>{label}</Text>
           </View>
           <PolarChart
-            data={DATA(colors.chart)} // 👈 specify your data
-            labelKey={'label'} // 👈 specify data key for labels
-            valueKey={'value'} // 👈 specify data key for values
-            colorKey={'color'} // 👈 specify data key for color
+            data={DATA(colors.chart)}
+            labelKey={'label'}
+            valueKey={'value'}
+            colorKey={'color'}
           >
             <Pie.Chart
               startAngle={135}
@@ -145,18 +172,37 @@ export const Summary = () => {
             }}
           >
             <View style={{ flex: 1 }}>
-              <StatCard value={0.87}>od średniego Polaka</StatCard>
+              <StatCard value={percentagePoland}>od średniego Polaka</StatCard>
             </View>
             <View style={{ flex: 1 }}>
-              <StatCard value={1.13}>od średniego Europejczyka</StatCard>
+              <StatCard value={percentageEU}>
+                od średniego Europejczyka
+              </StatCard>
             </View>
           </View>
         </Section>
 
         <Section title="Do absorpcji twojego śladu węglowego potrzeba">
-          {DATA_TREES.map(({ value, label, icon }) => (
-            <StatField icon={icon} value={value} label={label} key={label} />
-          ))}
+          <StatField
+            icon="nature"
+            value={dashboard.trees.adult}
+            label="100-letnich drzew"
+          />
+          <StatField
+            icon="nature"
+            value={dashboard.trees.medium}
+            label="25-letnich drzew"
+          />
+          <StatField
+            icon="nature"
+            value={dashboard.trees.small}
+            label="młodych drzew"
+          />
+          <StatField
+            icon="nature-people"
+            value={`${dashboard.jordan_trees_percentage.toFixed(2)}%`}
+            label="drzew w Parku Jordana"
+          />
         </Section>
       </View>
     </Card>
@@ -164,20 +210,11 @@ export const Summary = () => {
 };
 
 const DATA = (color: string) => [
-  { value: 0.6, color: Colors.light.green[500], label: 'Label 1' },
+  { value: 0.6, color, label: 'Label 1' },
   { value: 0.4, color: Colors.light.neutral[50], label: 'Label 2' },
 ];
 
-const DATA_TREES = [
-  { value: 17, label: '100-letnich drzew', icon: 'nature' },
-  { value: 35, label: '25-letnich drzew', icon: 'nature' },
-  { value: 57, label: 'młodych drzew', icon: 'nature' },
-  { value: `${5}%`, label: 'drzew w Parku Jordana', icon: 'nature-people' },
-] as const;
-
 function MyCustomSlice({ slice }: { slice: PieSliceData }) {
-  // 👇 use the hook to generate a path object.
   const path = useSlicePath({ slice });
-  /* 👇 experiment wtih any other customizations you want */
   return <Path path={path} color={slice.color} style="fill" />;
 }

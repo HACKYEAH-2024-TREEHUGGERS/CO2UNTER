@@ -60,6 +60,8 @@ export const VehiclesDetails = () => {
 const Item = ({ vehicle }: { vehicle: (typeof VEHICLES)[number] }) => {
   const fieldSet = useFieldSet({ vehicle });
 
+  if (vehicle.value === 'bike') return;
+
   return (
     <View
       style={{
