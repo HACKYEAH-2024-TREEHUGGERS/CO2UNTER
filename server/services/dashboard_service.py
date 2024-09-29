@@ -1,3 +1,4 @@
+import math
 import datetime
 
 from fastapi import HTTPException
@@ -43,13 +44,13 @@ def get_dashboard(db: Database, device_id: str, timeframe: str):
     total_emissions = aggregate_emissions_summary(user[0].get("activities"))
     return {
         "summary": total_emissions,
-        "comparison": {
+        "country_emission_per_timeline": {
             country: emissions * day_multiplier
             for country, emissions in EMISSIONS_PER_HUMAN_PER_DAY.items()
         },
         "trees": {
-            tree: tree_multiplier * total_emissions
+            tree: math.ceil(tree_multiplier * total_emissions)
             for tree, tree_multiplier in EMISSIONS_PER_TREE_PER_KG.items()
         },
-        "jordan_percentage": get_jordan_percentage(db, total_emissions)
+        "jordan_trees_percentage": get_jordan_percentage(db, total_emissions)
     }
