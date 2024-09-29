@@ -92,7 +92,7 @@ export const Summary = () => {
               alignSelf: 'center',
             }}
           >
-            <Circle cx={256 / 2} cy={256 / 2} r={256 / 2} color='red'>
+            <Circle cx={256 / 2} cy={256 / 2} r={256 / 2} color="red">
               <RadialGradient
                 c={vec(256 / 2, 256 / 2)}
                 r={256 / 2}
@@ -137,7 +137,7 @@ export const Summary = () => {
           </PolarChart>
         </View>
 
-        <Section title='Porównanie Twoich emisji'>
+        <Section title="Porównanie Twoich emisji">
           <View
             style={{
               flexDirection: 'row',
@@ -153,7 +153,7 @@ export const Summary = () => {
           </View>
         </Section>
 
-        <Section title='Do absorpcji twojego śladu węglowego potrzeba'>
+        <Section title="Do absorpcji twojego śladu węglowego potrzeba">
           {DATA_TREES.map(({ value, label, icon }) => (
             <StatField icon={icon} value={value} label={label} key={label} />
           ))}
@@ -179,5 +179,5 @@ function MyCustomSlice({ slice }: { slice: PieSliceData }) {
   // 👇 use the hook to generate a path object.
   const path = useSlicePath({ slice });
   /* 👇 experiment wtih any other customizations you want */
-  return <Path path={path} color={slice.color} style='fill' />;
+  return <Path path={path} color={slice.color} style="fill" />;
 }

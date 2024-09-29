@@ -2,6 +2,7 @@ import { Diet } from '@/components/cards/diet';
 import { Media } from '@/components/cards/media';
 import { Summary } from '@/components/cards/summary';
 import { Transport } from '@/components/cards/transport';
+import { Colors } from '@/constants/Colors';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
 export default function Tab() {
@@ -13,7 +14,15 @@ export default function Tab() {
           marginVertical: 16,
         }}
       >
-        <Text>Dashboard</Text>
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: '500',
+            color: Colors.light.neutral[900],
+          }}
+        >
+          Dashboard
+        </Text>
       </View>
       <View
         style={{
