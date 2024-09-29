@@ -28,7 +28,7 @@ export const DIETS = [
       <MaterialIcons name="restaurant" size={24} color={color} />
     ),
 
-    label: 'Wszystkożerców',
+    label: 'Bez Restrykcji',
     value: 'omnivore',
   },
   {
