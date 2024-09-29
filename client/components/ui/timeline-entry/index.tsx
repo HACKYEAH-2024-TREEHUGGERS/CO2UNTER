@@ -12,6 +12,9 @@ export type ActivityType = 'transport' | 'media';
 export type Activity = {
   type: ActivityType;
   date: string;
+  name: string;
+  icon: string;
+  co2: number;
 };
 
 type TimelineEntryProps = {
@@ -25,7 +28,7 @@ export const TimelineEntry = ({ activity, style }: TimelineEntryProps) => {
   return (
     <View style={[styles.container, style]}>
       <View style={styles.leftSide}>
-        <Text style={{ marginTop: -32 }}>
+        <Text style={{ marginTop: -32, fontSize: 12 }}>
           {format(new Date(activity.date), 'dd.MM.yyyy')}
         </Text>
         <View style={styles.circle} />
@@ -33,8 +36,31 @@ export const TimelineEntry = ({ activity, style }: TimelineEntryProps) => {
       <View style={styles.rightSide}>
         <Card radius={8} containerStyle={{ marginTop: -72 }}>
           <View style={{ padding: 12 }}>
-            <Text style={styles.activityHeader}>{activity.type}</Text>
-            <Text>{activity.type}</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                gap: 10,
+                alignItems: 'center',
+                paddingBottom: 8,
+              }}
+            >
+              <MaterialIcons
+                name={activity.icon as any}
+                size={24}
+                color={Colors.light.green[900]}
+              />
+              <Text style={styles.activityHeader}>{activity.name}</Text>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <Text>{activity.type}</Text>
+              <Text>{activity.co2}kg CO₂</Text>
+            </View>
           </View>
         </Card>
       </View>
@@ -74,6 +100,5 @@ const createStyles = (activityType: ActivityType) =>
       fontSize: 16,
       fontWeight: '500',
       color: Colors.light.neutral[900],
-      marginBottom: 18,
     },
   });

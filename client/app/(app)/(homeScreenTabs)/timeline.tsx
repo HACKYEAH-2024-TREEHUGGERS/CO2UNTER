@@ -8,48 +8,81 @@ import DateTimePicker, { DateType } from 'react-native-ui-datepicker';
 
 const DATA_ACTIVITIES = [
   {
+    name: 'Honda Civic',
     type: 'transport',
     date: '2024-01-01',
+    icon: 'directions-car',
+    co2: 100,
   },
   {
+    name: 'HackYeah 2024',
+    type: 'event',
+    date: '2024-09-28',
+    icon: 'confirmation-number',
+    co2: 120,
+  },
+  {
+    name: 'Sieć Elektryczna',
     type: 'media',
     date: '2024-01-02',
+    icon: 'bolt',
+    co2: 50,
   },
   {
-    type: 'media',
-    date: '2024-01-03',
-  },
-  {
-    type: 'transport',
+    name: 'Koncert',
+    type: 'event',
     date: '2024-01-04',
+    icon: 'confirmation-number',
+    co2: 80,
   },
   {
+    name: 'Sieć Elektryczna',
     type: 'media',
     date: '2024-01-05',
+    icon: 'bolt',
+    co2: 50,
   },
   {
-    type: 'media',
+    name: 'Kino',
+    type: 'service',
     date: '2024-01-06',
+    icon: 'theaters',
+    co2: 30,
   },
   {
-    type: 'transport',
+    name: 'Kino',
+    type: 'service',
     date: '2024-01-07',
+    icon: 'theaters',
+    co2: 75,
   },
   {
+    name: 'Sieć Elektryczna',
     type: 'media',
     date: '2024-01-08',
+    icon: 'bolt',
+    co2: 94,
   },
   {
+    name: 'Sieć Elektryczna',
     type: 'media',
     date: '2024-01-09',
+    icon: 'bolt',
+    co2: 32,
   },
   {
+    name: 'Honda Civic',
     type: 'transport',
     date: '2024-01-10',
+    icon: 'directions-car',
+    co2: 643,
   },
   {
+    name: 'Sieć Elektryczna',
     type: 'media',
     date: '2024-09-29',
+    icon: 'bolt',
+    co2: 456,
   },
 ].sort((b, a) => a.date.localeCompare(b.date)) as Activity[];
 
@@ -125,7 +158,9 @@ export default function TimelineTab() {
           >
             <Text>W tym okresie wyemitowałeś</Text>
             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-              <Text style={{ fontWeight: 'bold', fontSize: 16 }}>1024</Text>
+              <Text style={{ fontWeight: 'bold', fontSize: 16 }}>
+                {currentActivities.reduce((acc, a) => acc + a.co2, 0)}
+              </Text>
               <Text style={{ fontSize: 12 }}>kg CO₂</Text>
             </View>
           </View>
