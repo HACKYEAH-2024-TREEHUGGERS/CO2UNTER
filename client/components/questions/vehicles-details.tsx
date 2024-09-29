@@ -16,8 +16,6 @@ export const VehiclesDetails = () => {
     (state) => state.answers['vehicles']
   ) as string[];
 
-  console.log({ value });
-
   const vehicles = VEHICLES.filter((vehicle) =>
     selectedVehicles.includes(vehicle.value)
   );

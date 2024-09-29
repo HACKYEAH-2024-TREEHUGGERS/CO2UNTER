@@ -1,10 +1,15 @@
+import { createUser } from '@/api/user';
 import { Diet } from '@/components/questions/diet';
 import { IntroQuestion } from '@/components/questions/intro';
 import { Services } from '@/components/questions/services';
+import { SolarPanels } from '@/components/questions/solar-panels';
 import { Vehicles } from '@/components/questions/vehicles';
 import { VehiclesDetails } from '@/components/questions/vehicles-details';
 import { Button } from '@/components/ui/button';
 import { useSurveyStore } from '@/stores/survey';
+import { useUserStore } from '@/stores/user';
+import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Text, View } from 'react-native';
 import Animated, {
@@ -45,18 +50,8 @@ const QUEUE: QueueEntry[] = [
     component: Services,
   },
   {
-    id: 'intro-end',
-    component: () => (
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Text>End of survey</Text>
-      </View>
-    ),
+    id: 'solar-panels',
+    component: SolarPanels,
   },
 ];
 
@@ -66,6 +61,20 @@ export default function SurveyPage() {
   const nextQuestion = useSurveyStore((state) => state.nextQuestion);
   const previousQuestion = useSurveyStore((state) => state.prevQuestion);
   const answers = useSurveyStore((state) => state.answers);
+
+  const fetchUser = useUserStore((state) => state.fetchUser);
+  const { navigate } = useRouter();
+
+  const mutation = useMutation({
+    mutationFn: async (name: string) => {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await createUser({ name });
+    },
+    onSuccess: async () => {
+      await fetchUser();
+      navigate('/(app)');
+    },
+  });
 
   const filteredQueue = QUEUE.filter((entry) => {
     if (entry.if) {
@@ -87,6 +96,12 @@ export default function SurveyPage() {
     if (hasPreviousQuestion) {
       previousQuestion();
     }
+  };
+
+  const handleFinish = async () => {
+    const name = answers['intro'];
+
+    mutation.mutate(name);
   };
 
   const { component: Comp, id } = filteredQueue[currentQuestionIndex];
@@ -112,7 +127,11 @@ export default function SurveyPage() {
       <View style={{ marginTop: 'auto', flexDirection: 'row', gap: 10 }}>
         {hasPreviousQuestion && (
           <View style={{ flex: 1 }}>
-            <Button variant="secondary" onPress={handlePrevious}>
+            <Button
+              variant="secondary"
+              onPress={handlePrevious}
+              loading={mutation.isPending}
+            >
               Cofnij
             </Button>
           </View>
@@ -121,6 +140,13 @@ export default function SurveyPage() {
           <View style={{ flex: 1 }}>
             <Button onPress={handleNext}>
               {hasPreviousQuestion ? 'Dalej' : 'Rozpocznij'}
+            </Button>
+          </View>
+        )}
+        {!hasNextQuestion && (
+          <View style={{ flex: 1 }}>
+            <Button loading={mutation.isPending} onPress={handleFinish}>
+              Zakończ
             </Button>
           </View>
         )}
