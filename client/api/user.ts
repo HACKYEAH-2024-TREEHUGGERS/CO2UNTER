@@ -6,7 +6,7 @@ import { HTTPError } from 'ky';
 
 const generateOrGetSecureId = async () => {
   const deviceId = await SecureStore.getItemAsync('deviceId');
-  if (deviceId) return deviceId;
+  if (deviceId) return JSON.parse(deviceId);
   const newDeviceId = uuidv4();
   await SecureStore.setItemAsync('deviceId', JSON.stringify(newDeviceId));
 
@@ -17,7 +17,7 @@ export const getUser = async () => {
   const id = await generateOrGetSecureId();
 
   try {
-    const data = await ky.get(`users/${id}`).json();
+    const data = await ky.get(`users/${id}/`).json();
 
     return data;
   } catch (error) {
@@ -26,5 +26,20 @@ export const getUser = async () => {
     }
 
     throw error;
+  }
+};
+
+export const createUser = async ({ name }: { name: string }) => {
+  const id = await generateOrGetSecureId();
+
+  try {
+    await ky.post('users/', {
+      json: {
+        device_id: id,
+        name,
+      },
+    });
+  } catch (error) {
+    console.error(error);
   }
 };

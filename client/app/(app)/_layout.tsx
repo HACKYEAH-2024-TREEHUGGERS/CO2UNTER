@@ -1,7 +1,6 @@
 import { useUserStore } from '@/stores/user';
 import { Redirect, SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
-import { Text } from 'react-native';
 
 SplashScreen.preventAutoHideAsync();
 

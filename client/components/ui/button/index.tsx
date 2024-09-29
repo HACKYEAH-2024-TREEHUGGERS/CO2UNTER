@@ -1,14 +1,14 @@
-import React from "react";
-import { Pressable, Text } from "react-native";
-import Animated, { LinearTransition } from "react-native-reanimated";
+import React from 'react';
+import { Pressable, Text } from 'react-native';
+import Animated, { LinearTransition } from 'react-native-reanimated';
 import {
   getButtonConfig,
   labelStyles,
   styles,
   Variant,
   VariantState,
-} from "./styles";
-import { Loader } from "../loader";
+} from './styles';
+import { Loader } from '../loader';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -21,8 +21,9 @@ type Props = {
   state?: VariantState;
   icon?: {
     icon: (color: string) => React.ReactNode;
-    position?: "left" | "right";
+    position?: 'left' | 'right';
   };
+  onPress?: () => void;
 };
 
 const Button = React.forwardRef<AnimatedPressableRef, Props>(
@@ -30,17 +31,19 @@ const Button = React.forwardRef<AnimatedPressableRef, Props>(
     {
       children,
       loading,
-      variant = "primary",
-      state = "default",
+      variant = 'primary',
+      state = 'default',
       icon,
+      onPress,
       ...props
     },
     ref
   ) => {
-    const config = getButtonConfig(variant, loading ? "inactive" : state);
+    const config = getButtonConfig(variant, loading ? 'inactive' : state);
 
     return (
       <AnimatedPressable
+        onPress={onPress}
         layout={LinearTransition.springify()}
         ref={ref}
         {...props}
@@ -54,7 +57,7 @@ const Button = React.forwardRef<AnimatedPressableRef, Props>(
       >
         {!loading ? (
           <>
-            {icon?.position === "left" && icon.icon(config.label)}
+            {icon?.position === 'left' && icon.icon(config.label)}
             <Text
               style={[
                 labelStyles.buttonBase,
@@ -65,7 +68,7 @@ const Button = React.forwardRef<AnimatedPressableRef, Props>(
             >
               {children}
             </Text>
-            {icon?.position === "right" && icon.icon(config.label)}
+            {icon?.position === 'right' && icon.icon(config.label)}
           </>
         ) : (
           <Loader color={config.label} />
@@ -75,6 +78,6 @@ const Button = React.forwardRef<AnimatedPressableRef, Props>(
   }
 );
 
-Button.displayName = "Button";
+Button.displayName = 'Button';
 
 export { Button };
