@@ -1,18 +1,23 @@
+import { useUserStore } from '@/stores/user';
 import { Stack } from 'expo-router';
 
+useUserStore.getState().fetchUser();
+
 export default function RootLayout() {
+  const status = useUserStore((state) => state.status);
+
+  if (status === 'UNKNOWN') {
+    return null;
+  }
+
   return (
     <Stack
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName='(homeScreenTabs)'
-    >
-      <Stack.Screen name='(homeScreenTabs)' options={{ headerShown: false }} />
-      <Stack.Screen
-        name='addActivity'
-        options={{ headerShown: false, animation: 'slide_from_bottom' }}
-      />
-    </Stack>
+      initialRouteName={
+        status === 'AUTHENTICATED' ? '(homeScreenTabs)' : 'survey'
+      }
+    />
   );
 }
