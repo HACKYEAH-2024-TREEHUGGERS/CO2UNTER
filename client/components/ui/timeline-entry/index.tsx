@@ -5,6 +5,7 @@ import { StyleProp, ViewStyle } from 'react-native';
 import { Text } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import { Card } from '../card';
+import { format, Locale } from 'date-fns';
 
 export type ActivityType = 'transport' | 'media';
 
@@ -25,7 +26,7 @@ export const TimelineEntry = ({ activity, style }: TimelineEntryProps) => {
     <View style={[styles.container, style]}>
       <View style={styles.leftSide}>
         <Text style={{ marginTop: -32 }}>
-          {new Date(activity.date).toDateString()}
+          {format(new Date(activity.date), 'dd.MM.yyyy')}
         </Text>
         <View style={styles.circle} />
       </View>

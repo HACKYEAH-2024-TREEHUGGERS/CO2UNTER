@@ -5,6 +5,7 @@ import { useUserStore } from '@/stores/user';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { TextInput, View } from 'react-native';
 
@@ -31,6 +32,7 @@ export default function Survey() {
         alignItems: 'center',
       }}
     >
+      <StatusBar style="dark" />
       <TextInput
         placeholder="Name"
         value={name}
