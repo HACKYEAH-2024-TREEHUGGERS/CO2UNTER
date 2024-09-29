@@ -1,49 +1,49 @@
-import { Text, View } from "react-native";
-import { Card } from "../ui/card";
-import { Tabs } from "../ui/tabs";
-import { Colors } from "@/constants/Colors";
-import { useState } from "react";
+import { Text, View } from 'react-native';
+import { Card } from '../ui/card';
+import { Tabs } from '../ui/tabs';
+import { Colors } from '@/constants/Colors';
+import { useState } from 'react';
 import {
   Pie,
   type PieSliceData,
   PolarChart,
   useSlicePath,
-} from "victory-native";
+} from 'victory-native';
 import {
   Canvas,
   Circle,
   Path,
   RadialGradient,
   vec,
-} from "@shopify/react-native-skia";
-import { useStateColors } from "@/hooks/useStateColors";
-import { StatCard } from "../ui/stat-card";
-import { StatField } from "../ui/stat-field";
+} from '@shopify/react-native-skia';
+import { useStateColors } from '@/hooks/useStateColors';
+import { StatCard } from '../ui/stat-card';
+import { StatField } from '../ui/stat-field';
 
 const options = [
   {
-    value: "year",
-    label: "Rok",
+    value: 'year',
+    label: 'Rok',
   },
   {
-    value: "month",
-    label: "Miesiąc",
+    value: 'month',
+    label: 'Miesiąc',
   },
   {
-    value: "week",
-    label: "Tydzień",
+    value: 'week',
+    label: 'Tydzień',
   },
   {
-    value: "day",
-    label: "Dzień",
+    value: 'day',
+    label: 'Dzień',
   },
 ];
 
-type Option = (typeof options)[number]["value"];
+type Option = (typeof options)[number]['value'];
 
 export const Summary = () => {
-  const [selected, setSelected] = useState<Option>("week");
-  const colors = useStateColors("positive");
+  const [selected, setSelected] = useState<Option>('week');
+  const colors = useStateColors('positive');
 
   return (
     <Card radius={24}>
@@ -51,9 +51,9 @@ export const Summary = () => {
         <View
           style={{
             marginBottom: 16,
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
           }}
         >
           <Text
@@ -67,7 +67,7 @@ export const Summary = () => {
           </Text>
           <Text
             style={{
-              color: "#2E6BE5",
+              color: '#2E6BE5',
             }}
           >
             Więcej...
@@ -83,12 +83,12 @@ export const Summary = () => {
         >
           <Canvas
             style={{
-              position: "absolute",
+              position: 'absolute',
               width: 256,
               height: 256,
               zIndex: -1,
               borderRadius: 256 / 2,
-              alignSelf: "center",
+              alignSelf: 'center',
             }}
           >
             <Circle cx={256 / 2} cy={256 / 2} r={256 / 2} color="red">
@@ -102,17 +102,17 @@ export const Summary = () => {
           </Canvas>
           <View
             style={{
-              position: "absolute",
-              alignSelf: "center",
-              alignItems: "center",
-              height: "100%",
-              justifyContent: "center",
+              position: 'absolute',
+              alignSelf: 'center',
+              alignItems: 'center',
+              height: '100%',
+              justifyContent: 'center',
             }}
           >
             <Text
               style={{
                 fontSize: 36,
-                fontWeight: "700",
+                fontWeight: '700',
                 color: Colors.light.neutral[900],
               }}
             >
@@ -122,9 +122,9 @@ export const Summary = () => {
           </View>
           <PolarChart
             data={DATA(colors.chart)} // 👈 specify your data
-            labelKey={"label"} // 👈 specify data key for labels
-            valueKey={"value"} // 👈 specify data key for values
-            colorKey={"color"} // 👈 specify data key for color
+            labelKey={'label'} // 👈 specify data key for labels
+            valueKey={'value'} // 👈 specify data key for values
+            colorKey={'color'} // 👈 specify data key for color
           >
             <Pie.Chart
               startAngle={135}
@@ -137,7 +137,7 @@ export const Summary = () => {
         </View>
         <Text
           style={{
-            fontWeight: "500",
+            fontWeight: '500',
             marginBottom: 10,
           }}
         >
@@ -145,7 +145,7 @@ export const Summary = () => {
         </Text>
         <View
           style={{
-            flexDirection: "row",
+            flexDirection: 'row',
             gap: 16,
           }}
         >
@@ -156,29 +156,33 @@ export const Summary = () => {
             <StatCard value={1.13}>od średniego Europejczyka</StatCard>
           </View>
         </View>
-        {DATA_TREES.map(({ value, label, icon }) => (
-          <StatField
-            icon={icon}
-            value={value}
-            label={label}
-            style={{ marginTop: 12 }}
-          />
-        ))}
+        <Text style={{ marginTop: 24, marginBottom: 12, fontWeight: '500' }}>
+          Do absorpcji twojego śladu węglowego potrzeba
+        </Text>
+        <View
+          style={{
+            gap: 12,
+          }}
+        >
+          {DATA_TREES.map(({ value, label, icon }) => (
+            <StatField icon={icon} value={value} label={label} />
+          ))}
+        </View>
       </View>
     </Card>
   );
 };
 
 const DATA = (color: string) => [
-  { value: 0.6, color: Colors.light.green[500], label: "Label 1" },
-  { value: 0.4, color: Colors.light.neutral[50], label: "Label 2" },
+  { value: 0.6, color: Colors.light.green[500], label: 'Label 1' },
+  { value: 0.4, color: Colors.light.neutral[50], label: 'Label 2' },
 ];
 
 const DATA_TREES = [
-  { value: 17, label: "100-letnich drzew", icon: "nature" },
-  { value: 35, label: "25-letnich drzew", icon: "nature" },
-  { value: 57, label: "młodych drzew", icon: "nature" },
-  { value: `${5}%`, label: "drzew w Parku Jordana", icon: "nature-people" },
+  { value: 17, label: '100-letnich drzew', icon: 'nature' },
+  { value: 35, label: '25-letnich drzew', icon: 'nature' },
+  { value: 57, label: 'młodych drzew', icon: 'nature' },
+  { value: `${5}%`, label: 'drzew w Parku Jordana', icon: 'nature-people' },
 ] as const;
 
 function MyCustomSlice({ slice }: { slice: PieSliceData }) {
