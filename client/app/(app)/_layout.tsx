@@ -23,6 +23,16 @@ export default function AppLayout() {
       screenOptions={{
         headerShown: false,
       }}
-    />
+      initialRouteName="/(homeScreenTabs)"
+    >
+      <Stack.Screen
+        name="addActivity"
+        options={{
+          headerShown: false,
+          animation: 'slide_from_bottom',
+          presentation: 'modal',
+        }}
+      />
+    </Stack>
   );
 }
