@@ -25,7 +25,12 @@ def get_db() -> Generator:
 
 
 @app.get("/users/{device_id}", tags=["users"])
-def get_user(device_id: str, db=Depends(get_db), timeframe: str = "week"):
+def get_user(device_id: str, db=Depends(get_db)):
+    return users_service.get_user_by_device_id(db, device_id)
+
+
+@app.get("/users/{device_id}/dashboard", tags=["users"])
+def get_dashboard(device_id: str, db=Depends(get_db), timeframe: str = "week"):
     return users_service.get_dashboard(db, device_id, timeframe)
 
 

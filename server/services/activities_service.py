@@ -21,3 +21,7 @@ def insert_activity(db: Database, device_id: str, activity_in: CreateActivity):
         raise HTTPException(status_code=404, detail="User not found")
 
     return payload
+
+
+def aggregate_emissions_summary(activities: list) -> float:
+    return sum(a['emission'] for a in activities)

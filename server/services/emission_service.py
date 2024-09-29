@@ -10,7 +10,11 @@ EMISSIONS_PER_KM = {
     VehicleActivities.MOVE_BY_WALK: 0.0
 }
 
+EMISSIONS_PER_HUMAN_PER_DAY = {
+    "poland": 8.49,
+    "eu": 6.02
+}
+
 
 def calculate_transport_emission(vehicle: VehicleActivities, amount: float) -> float:
     return EMISSIONS_PER_KM[vehicle] * amount
-
