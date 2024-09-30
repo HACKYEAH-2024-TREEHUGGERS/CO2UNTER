@@ -22,9 +22,6 @@ export const useUserStore = create<UserState & Actions>()((set) => ({
   status: UserStatus.UNKNOWN,
   user: null,
   fetchUser: async () => {
-    const user = await getUser();
-    if (!user) return set({ status: UserStatus.NOT_EXISTING, user: null });
-
-    set({ status: UserStatus.AUTHENTICATED, user });
+    return set({ status: UserStatus.NOT_EXISTING, user: null });
   },
 }));

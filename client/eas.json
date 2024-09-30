@@ -1,29 +1,24 @@
 {
   "cli": {
-    "version": ">= 3.7.2"
+    "version": ">= 12.5.1",
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal",
-      "ios": {
-        "resourceClass": "m1-medium"
-      }
+      "distribution": "internal"
     },
     "preview": {
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_URL=https": "//co2unter-production.up.railway.app/"
+      },
       "android": {
         "buildType": "apk"
-      },
-
-      "distribution": "internal",
-      "ios": {
-        "resourceClass": "m1-medium"
       }
     },
     "production": {
-      "ios": {
-        "resourceClass": "m1-medium"
-      }
+      "autoIncrement": true
     }
   },
   "submit": {

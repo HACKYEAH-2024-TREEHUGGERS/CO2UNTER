@@ -9,14 +9,9 @@ import { Button } from '@/components/ui/button';
 import { useSurveyStore } from '@/stores/survey';
 import { useUserStore } from '@/stores/user';
 import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'expo-router';
-import { useState } from 'react';
-import { Text, View } from 'react-native';
-import Animated, {
-  FadeInLeft,
-  FadeInRight,
-  FadeOutLeft,
-} from 'react-native-reanimated';
+import { router, useRouter } from 'expo-router';
+import { View } from 'react-native';
+import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type QueueEntry = {
@@ -83,7 +78,7 @@ export default function SurveyPage() {
     return true;
   });
 
-  const hasNextQuestion = currentQuestionIndex < QUEUE.length - 1;
+  const hasNextQuestion = currentQuestionIndex <= filteredQueue.length - 1;
   const hasPreviousQuestion = currentQuestionIndex > 0;
 
   const handleNext = () => {
@@ -99,12 +94,10 @@ export default function SurveyPage() {
   };
 
   const handleFinish = async () => {
-    const name = answers['intro'];
-
-    mutation.mutate(name);
+    router.replace('/(homeScreenTabs)');
   };
 
-  const { component: Comp, id } = filteredQueue[currentQuestionIndex];
+  const { component: Comp, id } = QUEUE[currentQuestionIndex];
 
   return (
     <View

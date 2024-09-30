@@ -1,21 +1,17 @@
-import { useUserStore } from '@/stores/user';
+import { useSurveyStore } from '@/stores/survey';
 import { Redirect, SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
 
-SplashScreen.preventAutoHideAsync();
-
 export default function AppLayout() {
-  const status = useUserStore((state) => state.status);
-
   useEffect(() => {
-    if (status !== 'UNKNOWN') {
-      SplashScreen.hideAsync();
-    }
-  }, [status]);
+    SplashScreen.hideAsync();
+  }, []);
 
-  if (status === 'UNKNOWN') return null;
+  const currentQuestionIndex = useSurveyStore((state) => state.currentQuestion);
 
-  if (status === 'NOT_EXISTING') return <Redirect href="/survey" />;
+  if (!currentQuestionIndex) {
+    return <Redirect href="/survey" />;
+  }
 
   return (
     <Stack

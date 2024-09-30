@@ -17,8 +17,13 @@ export const VehiclesDetails = () => {
   ) as string[];
 
   const vehicles = VEHICLES.filter((vehicle) =>
-    selectedVehicles.includes(vehicle.value)
+    selectedVehicles?.includes(vehicle.value)
   );
+
+  if (!vehicles?.length) {
+    skip();
+    return <></>;
+  }
 
   return (
     <>

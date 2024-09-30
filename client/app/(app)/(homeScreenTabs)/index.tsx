@@ -1,41 +1,25 @@
-import { getDashboard } from '@/api/dashboard';
 import { Diet } from '@/components/cards/diet';
 import { Media } from '@/components/cards/media';
 import { Summary } from '@/components/cards/summary';
 import { Transport } from '@/components/cards/transport';
 import { Colors } from '@/constants/Colors';
-import { useDashboardStore } from '@/stores/dashboard';
-import { useQuery } from '@tanstack/react-query';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  ActivityIndicator,
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+
+const DASHBOARD_DATA = {
+  jordan_trees_percentage: 4.2,
+  trees: {
+    adult: 32,
+    medium: 87,
+    small: 252,
+  },
+  country_emission_per_timeline: {
+    eu: 8.3,
+    poland: 13.6,
+  },
+  summary: 69,
+};
 
 export default function Tab() {
-  const timeframe = useDashboardStore((state) => state.timeframe);
-  const { data: dashboard, error } = useQuery({
-    queryKey: ['dashboard', timeframe],
-    queryFn: async () => {
-      return getDashboard(timeframe);
-    },
-  });
-
-  if (!dashboard)
-    return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <ActivityIndicator size="large" color={Colors.light.green[700]} />
-      </View>
-    );
-
   return (
     <ScrollView style={styles.container}>
       <View
@@ -61,7 +45,7 @@ export default function Tab() {
           paddingBottom: 24,
         }}
       >
-        <Summary dashboard={dashboard} />
+        <Summary dashboard={DASHBOARD_DATA} />
         <Transport />
         <Diet />
         <Media />
